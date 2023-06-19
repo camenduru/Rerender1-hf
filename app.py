@@ -637,8 +637,7 @@ DESCRIPTION = '''
 
 **This code is for research purpose and non-commercial use only.**
 
-<a href="https://huggingface.co/spaces/Anonymous-sub/Rerender?duplicate=true" style="display: inline-block;margin-top: .5em;margin-right: .25em;" target="_blank">
-<img style="margin-bottom: 0em;display: inline;margin-top: -.25em;" src="https://bit.ly/3gLdBN6" alt="Duplicate Space"></a> for no queue on your own hardware.</p>
+[![Duplicate this Space](https://huggingface.co/datasets/huggingface/badges/raw/main/duplicate-this-space-sm-dark.svg)](https://huggingface.co/spaces/Anonymous-sub/Rerender?duplicate=true) for no queue on your own hardware.
 '''
 
 block = gr.Blocks().queue()
