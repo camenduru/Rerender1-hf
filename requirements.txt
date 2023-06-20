@@ -22,3 +22,4 @@ torchmetrics==0.6.0
 transformers==4.19.2
 webdataset==0.2.5
 yapf==0.32.0
+xformers==0.0.20
