@@ -32,17 +32,17 @@ from src.video_util import (frame_to_video, get_fps, get_frame_count,
 
 import huggingface_hub
 
-repo_name = 'Anonymous-sub/Rerender'
+REPO_NAME = 'Anonymous-sub/Rerender'
 
-huggingface_hub.hf_hub_download(repo_name,
+huggingface_hub.hf_hub_download(REPO_NAME,
                                 'pexels-koolshooters-7322716.mp4',
                                 local_dir='videos')
 huggingface_hub.hf_hub_download(
-    repo_name,
+    REPO_NAME,
     'pexels-antoni-shkraba-8048492-540x960-25fps.mp4',
     local_dir='videos')
 huggingface_hub.hf_hub_download(
-    repo_name,
+    REPO_NAME,
     'pexels-cottonbro-studio-6649832-960x506-25fps.mp4',
     local_dir='videos')
 
@@ -105,15 +105,20 @@ class GlobalState:
             model.load_state_dict(
                 load_state_dict(huggingface_hub.hf_hub_download(
                     'lllyasviel/ControlNet', './models/control_sd15_hed.pth'),
-                                location=device))
+                    location=device))
         elif control_type == 'canny':
             model.load_state_dict(
                 load_state_dict(huggingface_hub.hf_hub_download(
                     'lllyasviel/ControlNet', 'models/control_sd15_canny.pth'),
-                                location=device))
+                    location=device))
         model.to(device)
         sd_model_path = model_dict[sd_model]
         if len(sd_model_path) > 0:
+            repo_name = REPO_NAME
+            # check if sd_model is repo_id/name otherwise use global REPO_NAME
+            if sd_model.count('/') == 1:
+                repo_name = sd_model
+
             model_ext = os.path.splitext(sd_model_path)[1]
             downloaded_model = huggingface_hub.hf_hub_download(
                 repo_name, sd_model_path)
@@ -129,7 +134,7 @@ class GlobalState:
                 huggingface_hub.hf_hub_download(
                     'stabilityai/sd-vae-ft-mse-original',
                     'vae-ft-mse-840000-ema-pruned.ckpt'))['state_dict'],
-                                                    strict=False)
+                strict=False)
         except Exception:
             print('Warning: We suggest you download the fine-tuned VAE',
                   'otherwise the generation quality will be degraded')
@@ -791,10 +796,9 @@ with block:
                     maximum=100,
                     value=1,
                     step=1,
-                    info=
-                    ('Update the key and value for '
-                     'cross-frame attention every N key frames (recommend N*K>=10)'
-                     ))
+                    info=('Update the key and value for '
+                          'cross-frame attention every N key frames (recommend N*K>=10)'
+                          ))
                 with gr.Row():
                     warp_start = gr.Slider(label='Shape-aware fusion start',
                                            minimum=0,
