@@ -18,6 +18,7 @@ from skimage import exposure
 import src.import_util  # noqa: F401
 from ControlNet.annotator.canny import CannyDetector
 from ControlNet.annotator.hed import HEDdetector
+from ControlNet.annotator.midas import MidasDetector
 from ControlNet.annotator.util import HWC3
 from ControlNet.cldm.model import create_model, load_state_dict
 from gmflow_module.gmflow.gmflow import GMFlow
@@ -61,7 +62,7 @@ class ProcessingState(Enum):
     KEY_IMGS = 2
 
 
-MAX_KEYFRAME = 8
+MAX_KEYFRAME = float(os.environ.get('MAX_KEYFRAME', 8))
 
 
 class GlobalState:
@@ -111,6 +112,12 @@ class GlobalState:
                 load_state_dict(huggingface_hub.hf_hub_download(
                     'lllyasviel/ControlNet', 'models/control_sd15_canny.pth'),
                     location=device))
+        elif control_type == 'depth':
+            model.load_state_dict(
+                load_state_dict(huggingface_hub.hf_hub_download(
+                    'lllyasviel/ControlNet', 'models/control_sd15_depth.pth'),
+                    location=device))
+
         model.to(device)
         sd_model_path = model_dict[sd_model]
         if len(sd_model_path) > 0:
@@ -161,6 +168,15 @@ class GlobalState:
                 return canny_detector(x, low_threshold, high_threshold)
 
             self.detector = apply_canny
+
+        elif control_type == 'depth':
+            midas = MidasDetector()
+
+            def apply_midas(x):
+                detected_map, _ = midas(x)
+                return detected_map
+
+            self.detector = apply_midas
 
 
 global_state = GlobalState()
@@ -716,7 +732,7 @@ with block:
                                             value=0,
                                             step=1)
                 with gr.Row():
-                    control_type = gr.Dropdown(['HED', 'canny'],
+                    control_type = gr.Dropdown(['HED', 'canny', 'depth'],
                                                label='Control type',
                                                value='HED')
                     low_threshold = gr.Slider(label='Canny low threshold',
@@ -756,14 +772,14 @@ with block:
                 interval = gr.Slider(
                     label='Key frame frequency (K)',
                     minimum=1,
-                    maximum=1,
+                    maximum=MAX_KEYFRAME,
                     value=1,
                     step=1,
                     info='Uniformly sample the key frames every K frames')
                 keyframe_count = gr.Slider(
                     label='Number of key frames',
                     minimum=1,
-                    maximum=1,
+                    maximum=MAX_KEYFRAME,
                     value=1,
                     step=1,
                     info='To avoid overload, maximum 8 key frames')
