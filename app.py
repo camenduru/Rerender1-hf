@@ -639,7 +639,7 @@ def process2(*args):
 
 
 DESCRIPTION = '''
-## Rerender A Video
+## [Rerender A Video](https://github.com/williamyang1991/Rerender_A_Video)
 ### This space provides the function of key frame translation. Full code for full video translation will be released upon the publication of the paper.
 ### To avoid overload, we set limitations to the **maximum frame number** (8) and the maximum frame resolution (512x768). 
 ### The running time of a video of size 512x640 is about 1 minute per keyframe under T4 GPU.
@@ -647,7 +647,7 @@ DESCRIPTION = '''
 1. **Run 1st Key Frame**: only translate the first frame, so you can adjust the prompts/models/parameters to find your ideal output appearance before run the whole video.
 2. **Run Key Frames**: translate all the key frames based on the settings of the first frame
 3. **Run All**: **Run 1st Key Frame** and **Run Key Frames**
-4. **Run Propagation**: propogate the key frames to other frames for full video translation. This part will be released upon the publication of the paper.
+4. **Run Propagation**: propogate the key frames to other frames for full video translation. This function is supported [here](https://github.com/williamyang1991/Rerender_A_Video#webui-recommended)
 ### Tips: 
 1. This method cannot handle large or quick motions where the optical flow is hard to estimate. **Videos with stable motions are preferred**.
 2. Pixel-aware fusion may not work for large or quick motions.
@@ -660,6 +660,28 @@ DESCRIPTION = '''
 
 [![Duplicate this Space](https://huggingface.co/datasets/huggingface/badges/raw/main/duplicate-this-space-sm-dark.svg)](https://huggingface.co/spaces/Anonymous-sub/Rerender?duplicate=true) for no queue on your own hardware.
 '''
+
+
+ARTICLE = r"""
+If Rerender-A-Video is helpful, please help to ⭐ the <a href='https://github.com/williamyang1991/Rerender_A_Video' target='_blank'>Github Repo</a>. Thanks! 
+[![GitHub Stars](https://img.shields.io/github/stars/williamyang1991/Rerender_A_Video?style=social)](https://github.com/williamyang1991/Rerender_A_Video)
+---
+📝 **Citation**
+If our work is useful for your research, please consider citing:
+```bibtex
+@inproceedings{yang2023rerender,
+ title = {Rerender A Video: Zero-Shot Text-Guided Video-to-Video Translation},
+ author = {Yang, Shuai and Zhou, Yifan and Liu, Ziwei and and Loy, Chen Change},
+  booktitle = {ACM SIGGRAPH Asia Conference Proceedings},
+ year = {2023},
+}
+```
+📋 **License**
+This project is licensed under <a rel="license" href="https://github.com/williamyang1991/Rerender_A_Video/blob/main/LICENSE.md">S-Lab License 1.0</a>. 
+Redistribution and use for non-commercial purposes should follow this license.
+📧 **Contact**
+If you have any questions, please feel free to reach me out at <b>williamyang@pku.edu.cn</b>.
+"""
 
 block = gr.Blocks().queue()
 with block:
@@ -902,6 +924,8 @@ with block:
                     fn=process0,
                     outputs=[result_image, result_keyframe],
                     cache_examples=True)
+
+    gr.Markdown(ARTICLE)
 
     def input_uploaded(path):
         frame_count = get_frame_count(path)
