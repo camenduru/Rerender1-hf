@@ -679,6 +679,7 @@ If our work is useful for your research, please consider citing:
 📋 **License**
 This project is licensed under <a rel="license" href="https://github.com/williamyang1991/Rerender_A_Video/blob/main/LICENSE.md">S-Lab License 1.0</a>. 
 Redistribution and use for non-commercial purposes should follow this license.
+
 📧 **Contact**
 If you have any questions, please feel free to reach me out at <b>williamyang@pku.edu.cn</b>.
 """
