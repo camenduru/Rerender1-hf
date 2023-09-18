@@ -684,6 +684,9 @@ Redistribution and use for non-commercial purposes should follow this license.
 If you have any questions, please feel free to reach me out at <b>williamyang@pku.edu.cn</b>.
 """
 
+FOOTER = '<div align=center><img id="visitor-badge" alt="visitor badge" src="https://visitor-badge.laobi.icu/badge?page_id=williamyang1991/Rerender_A_Video" /></div>'
+
+
 block = gr.Blocks().queue()
 with block:
     with gr.Row():
@@ -927,6 +930,7 @@ with block:
                     cache_examples=True)
 
     gr.Markdown(ARTICLE)
+    gr.Markdown(FOOTER)
 
     def input_uploaded(path):
         frame_count = get_frame_count(path)
