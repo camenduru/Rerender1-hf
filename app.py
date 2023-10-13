@@ -641,7 +641,7 @@ def process2(*args):
 DESCRIPTION = '''
 ## [Rerender A Video](https://github.com/williamyang1991/Rerender_A_Video)
 ### This space provides the function of key frame translation. Full code for full video translation will be released upon the publication of the paper.
-### To avoid overload, we set limitations to the **maximum frame number** (8) and the maximum frame resolution (512x768). 
+### To avoid overload, we set limitations to the **maximum frame number** (300) and the maximum frame resolution (512x768). 
 ### The running time of a video of size 512x640 is about 1 minute per keyframe under T4 GPU.
 ### How to use:
 1. **Run 1st Key Frame**: only translate the first frame, so you can adjust the prompts/models/parameters to find your ideal output appearance before run the whole video.
@@ -658,7 +658,6 @@ DESCRIPTION = '''
 
 **This code is for research purpose and non-commercial use only.**
 
-[![Duplicate this Space](https://huggingface.co/datasets/huggingface/badges/raw/main/duplicate-this-space-sm-dark.svg)](https://huggingface.co/spaces/Anonymous-sub/Rerender?duplicate=true) for no queue on your own hardware.
 '''
 
 
