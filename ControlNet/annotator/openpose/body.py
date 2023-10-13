@@ -18,7 +18,7 @@ class Body(object):
             self.model = self.model.cuda()
             print('cuda')
         model_dict = util.transfer(self.model, torch.load(model_path))
-        self.model.load_state_dict(model_dict)
+        self.model.load_state_dict(model_dict, strict=False)
         self.model.eval()
 
     def __call__(self, oriImg):

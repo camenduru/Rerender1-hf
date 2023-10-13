@@ -106,17 +106,17 @@ class GlobalState:
             model.load_state_dict(
                 load_state_dict(huggingface_hub.hf_hub_download(
                     'lllyasviel/ControlNet', './models/control_sd15_hed.pth'),
-                    location=device))
+                    location=device), strict=False)
         elif control_type == 'canny':
             model.load_state_dict(
                 load_state_dict(huggingface_hub.hf_hub_download(
                     'lllyasviel/ControlNet', 'models/control_sd15_canny.pth'),
-                    location=device))
+                    location=device), strict=False)
         elif control_type == 'depth':
             model.load_state_dict(
                 load_state_dict(huggingface_hub.hf_hub_download(
                     'lllyasviel/ControlNet', 'models/control_sd15_depth.pth'),
-                    location=device))
+                    location=device), strict=False)
 
         model.to(device)
         sd_model_path = model_dict[sd_model]

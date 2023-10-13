@@ -25,7 +25,7 @@ class MLSDdetector:
             from basicsr.utils.download_util import load_file_from_url
             load_file_from_url(remote_model_path, model_dir=annotator_ckpts_path)
         model = MobileV2_MLSD_Large()
-        model.load_state_dict(torch.load(model_path), strict=True)
+        model.load_state_dict(torch.load(model_path), strict=False)
         self.model = model.cuda().eval()
 
     def __call__(self, input_image, thr_v, thr_d):

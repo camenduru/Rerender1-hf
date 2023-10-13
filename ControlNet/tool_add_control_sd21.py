@@ -45,6 +45,6 @@ for k in scratch_dict.keys():
         target_dict[k] = scratch_dict[k].clone()
         print(f'These weights are newly added: {k}')
 
-model.load_state_dict(target_dict, strict=True)
+model.load_state_dict(target_dict, strict=False)
 torch.save(model.state_dict(), output_path)
 print('Done.')
