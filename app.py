@@ -62,7 +62,7 @@ class ProcessingState(Enum):
     KEY_IMGS = 2
 
 
-MAX_KEYFRAME = float(os.environ.get('MAX_KEYFRAME', 8))
+MAX_KEYFRAME = float(os.environ.get('MAX_KEYFRAME', 300))
 
 
 class GlobalState:
@@ -927,7 +927,7 @@ with block:
                     inputs=[input_path, *ips],
                     fn=process0,
                     outputs=[result_image, result_keyframe],
-                    cache_examples=True)
+                    cache_examples=False)
 
     gr.Markdown(ARTICLE)
     gr.Markdown(FOOTER)
@@ -994,4 +994,4 @@ with block:
     run_button3.click(fn=process3, outputs=[result_keyframe])
 
 block.queue(concurrency_count=1, max_size=20)
-block.launch(server_name='0.0.0.0')
+block.launch(server_name='0.0.0.0', share=True)
